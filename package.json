@@ -1,0 +1,26 @@
+{
+  "name": "generate-env-example",
+  "version": "1.0.0",
+  "description": "Generate .env.example file from .env",
+  "main": "dist/index.js",
+  "bin": {
+    "generate-env-example": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "env",
+    "dotenv",
+    "example"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^14.14.31"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}

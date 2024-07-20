@@ -1,4 +1,4 @@
-# generate-env-example
+# envify-example
 
 Automatically generate a `.env.example` file from your `.env` without manual copying, pasting, or editing. Push your changes without worrying about exposing sensitive information.
 
@@ -14,7 +14,7 @@ Automatically generate a `.env.example` file from your `.env` without manual cop
 Install the package globally using npm:
 
 ```bash
-npm install -g generate-env-example
+npm install -g envify-example
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ npm install -g generate-env-example
 Run the package in your project directory:
 
 ```bash
-generate-env-example [path/to/.env]
+envify-example [path/to/.env]
 ```
 
 If no path is specified, it will look for a `.env` file in the current directory.
@@ -31,12 +31,12 @@ If no path is specified, it will look for a `.env` file in the current directory
 
 Generate from default `.env` file:
 ```bash
-generate-env-example
+envify-example
 ```
 
 Generate from a specific `.env` file:
 ```bash
-generate-env-example .env.local
+envify-example .env.local
 ```
 
 ## How it works

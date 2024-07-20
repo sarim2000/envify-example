@@ -1,10 +1,10 @@
 {
-  "name": "generate-env-example",
+  "name": "envify-example",
   "version": "1.0.0",
   "description": "Generate .env.example file from .env",
   "main": "dist/index.js",
   "bin": {
-    "generate-env-example": "./dist/index.js"
+    "envify-example": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

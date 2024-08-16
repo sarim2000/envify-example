@@ -1,4 +1,4 @@
-# env-tool
+# envify-example
 
 A CLI tool to convert .env files, generate .env.example or .env.json files, and optionally upload to or download from Consul.
 
@@ -14,19 +14,19 @@ A CLI tool to convert .env files, generate .env.example or .env.json files, and 
 Install the package globally using npm:
 
 ```bash
-npm install -g env-tool
+npm install -g envify-example
 ```
 
 ## Usage
 
-After installation, you can use the `env-tool` command in your terminal. Here are the available commands:
+After installation, you can use the `envify-example` command in your terminal. Here are the available commands:
 
 ### Convert .env file
 
 Convert a .env file to .env.example or .env.json:
 
 ```bash
-env-tool convert [options]
+envify-example convert [options]
 
 Options:
   -p, --path <path>  Path to the .env file (default: current directory/.env)
@@ -38,7 +38,7 @@ Options:
 Configure Consul settings:
 
 ```bash
-env-tool configure-consul [options]
+envify-example configure-consul [options]
 
 Options:
   -c, --configure    Configure Consul settings
@@ -50,7 +50,7 @@ Options:
 Download .env files from Consul:
 
 ```bash
-env-tool download [options]
+envify-example download [options]
 
 Options:
   -c, --consul-config  Path to Consul configuration file
@@ -62,7 +62,7 @@ Options:
 Upload .env files to Consul:
 
 ```bash
-env-tool upload [options]
+envify-example upload [options]
 
 Options:
   -c, --consul-config  Path to Consul configuration file

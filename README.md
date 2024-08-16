@@ -1,55 +1,69 @@
-# envify-example
+# env-tool
 
-Automatically generate a `.env.example` file from your `.env` without manual copying, pasting, or editing. Push your changes without worrying about exposing sensitive information.
+A CLI tool to convert .env files, generate .env.example or .env.json files, and optionally upload to or download from Consul.
 
 ## Features
 
-- Generates `.env.example` from your existing `.env` file
-- Supports various `.env` file types (`.env`, `.env.local`, etc.)
-- Preserves comments and structure of the original file
-- Replaces sensitive values with placeholders
+- Convert .env files to .env.example or .env.json
+- Upload .env files to Consul
+- Download .env files from Consul
+- Configure Consul settings
 
 ## Installation
 
 Install the package globally using npm:
 
 ```bash
-npm install -g envify-example
+npm install -g env-tool
 ```
 
 ## Usage
 
-Run the package in your project directory:
+After installation, you can use the `env-tool` command in your terminal. Here are the available commands:
+
+### Convert .env file
+
+Convert a .env file to .env.example or .env.json:
 
 ```bash
-envify-example [path/to/.env]
+env-tool convert [options]
+
+Options:
+  -p, --path <path>  Path to the .env file (default: current directory/.env)
+  -t, --type <type>  Output type: "example" or "json" (default: "example")
 ```
 
-If no path is specified, it will look for a `.env` file in the current directory.
+### Configure Consul
 
-### Examples
+Configure Consul settings:
 
-Generate from default `.env` file:
 ```bash
-envify-example
+env-tool configure-consul [options]
+
+Options:
+  -c, --configure    Configure Consul settings
+  -s, --save-config  Save Consul configuration for future use
 ```
 
-Generate from a specific `.env` file:
+### Download from Consul
+
+Download .env files from Consul:
+
 ```bash
-envify-example .env.local
+env-tool download [options]
+
+Options:
+  -c, --consul-config  Path to Consul configuration file
+  -o, --output <path>  Output path for the downloaded .env file
 ```
 
-## How it works
+### Upload to Consul
 
-1. Reads your specified `.env` file
-2. Replaces sensitive values with placeholders
-3. Preserves comments and file structure
-4. Creates a new `.env.example` file in the same directory
+Upload .env files to Consul:
 
-## Contributing
+```bash
+env-tool upload [options]
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License.
+Options:
+  -c, --consul-config  Path to Consul configuration file
+  -i, --input <path>  Path to the .env file to upload

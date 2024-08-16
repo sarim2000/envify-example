@@ -2,7 +2,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import os from 'os';
 import { input } from '@inquirer/prompts';
 import { Command } from 'commander';
 import { generateEnvExample, handleConsulConfig, uploadToConsul, convertEnvToJson, downloadFromConsul } from './utils.js';

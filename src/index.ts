@@ -32,8 +32,8 @@ program.command('configure-consul')
   });
 
 program.command('download')
-  .description('Download .env.json file from Consul')
-  .option('-p, --path <path>', 'Path to the .env.json file', path.join(process.cwd(), '.env.json'))
+  .description('Download .env file from Consul')
+  .option('-p, --path <path>', 'Path to the .env file', path.join(process.cwd(), '.env.json'))
   .action(async (options) => {
     const envPath = options.path;
     const envName = path.basename(path.dirname(envPath));

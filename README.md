@@ -1,17 +1,8 @@
-# envify-example
+# envify-example CLI
 
-A CLI tool to convert .env files, generate .env.example or .env.json files, and optionally upload to or download from Consul.
-
-## Features
-
-- Convert .env files to .env.example or .env.json
-- Upload .env files to Consul
-- Download .env files from Consul
-- Configure Consul settings
+A command-line interface tool for managing environment variables, converting .env files, and interacting with Consul.
 
 ## Installation
-
-Install the package globally using npm:
 
 ```bash
 npm install -g envify-example
@@ -19,51 +10,124 @@ npm install -g envify-example
 
 ## Usage
 
-After installation, you can use the `envify-example` command in your terminal. Here are the available commands:
+```bash
+envify-example [command] [options]
+```
 
-### Convert .env file
+## Commands
 
-Convert a .env file to .env.example or .env.json:
+### convert
+
+Convert a .env file to .env.example or .env.json.
 
 ```bash
 envify-example convert [options]
-
-Options:
-  -p, --path <path>  Path to the .env file (default: current directory/.env)
-  -t, --type <type>  Output type: "example" or "json" (default: "example")
 ```
 
-### Configure Consul
+Options:
+- `-p, --path <path>`: Path to the .env file (default: current directory's .env)
+- `-t, --type <type>`: Output type: "example" or "json" (default: "example")
 
-Configure Consul settings:
+Examples:
+```bash
+envify-example convert
+envify-example convert -p /path/to/.env -t json
+```
+
+### configure-consul
+
+Configure Consul settings.
 
 ```bash
 envify-example configure-consul [options]
-
-Options:
-  -c, --configure    Configure Consul settings
-  -s, --save-config  Save Consul configuration for future use
 ```
 
-### Download from Consul
+Options:
+- `-c, --configure`: Configure Consul settings
+- `-s, --save-config`: Save Consul configuration for future use
 
-Download .env files from Consul:
+Example:
+```bash
+envify-example configure-consul -c -s
+```
+
+### download
+
+Download .env file from Consul.
 
 ```bash
 envify-example download [options]
-
-Options:
-  -c, --consul-config  Path to Consul configuration file
-  -o, --output <path>  Output path for the downloaded .env file
 ```
 
-### Upload to Consul
+Options:
+- `-p, --path <path>`: Path to save the downloaded .env file (default: current directory's .env)
 
-Upload .env files to Consul:
+Example:
+```bash
+envify-example download
+envify-example download -p /path/to/save/.env
+```
+
+### upload
+
+Upload .env file to Consul.
 
 ```bash
 envify-example upload [options]
+```
 
 Options:
-  -c, --consul-config  Path to Consul configuration file
-  -i, --input <path>  Path to the .env file to upload
+- `-p, --path <path>`: Path to the .env file to upload (default: current directory's .env)
+
+Example:
+```bash
+envify-example upload
+envify-example upload -p /path/to/.env
+```
+
+## Global Options
+
+- `-V, --version`: Output the version number
+- `-h, --help`: Display help for command
+
+## Examples
+
+1. Convert a .env file to .env.example:
+   ```bash
+   envify-example convert
+   ```
+
+2. Convert a .env file to .env.json:
+   ```bash
+   envify-example convert -t json
+   ```
+
+3. Configure Consul settings and save for future use:
+   ```bash
+   envify-example configure-consul -c -s
+   ```
+
+4. Upload a .env file to Consul:
+   ```bash
+   envify-example upload
+   ```
+
+5. Download a .env.json file from Consul:
+   ```bash
+   envify-example download
+   ```
+
+## Notes
+
+- Make sure to configure Consul settings using the `configure-consul` command before attempting to upload or download files.
+- The tool assumes that your .env file is in the current working directory unless specified otherwise using the `-p` or `--path` option.
+
+## Troubleshooting
+
+If you encounter any issues, please check the following:
+
+1. Ensure that you have the necessary permissions to read/write files in the specified directories.
+2. Verify that your Consul configuration is correct and that you have network access to the Consul server.
+3. Make sure that the .env file exists in the specified location when using the `upload` command.
+
+For any further assistance, please open an issue on the project's GitHub repository.

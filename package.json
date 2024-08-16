@@ -2,6 +2,7 @@
   "name": "envify-example",
   "version": "1.0.0",
   "description": "Generate .env.example file from .env",
+  "type": "module",
   "main": "dist/index.js",
   "bin": {
     "envify-example": "./dist/index.js"
@@ -18,7 +19,10 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^14.14.31"
+    "@inquirer/prompts": "^5.3.8",
+    "@types/node": "^14.14.31",
+    "commander": "^12.1.0",
+    "inquirer": "^10.1.8"
   },
   "devDependencies": {
     "typescript": "^4.2.3"

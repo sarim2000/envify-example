@@ -2,7 +2,7 @@
 
 A command-line interface tool for generating conentional github commit messages using OpenAI and managing environment variables, converting .env files, and interacting with Consul.
 
-![generate-commit-message](/doc/screenshot.png)
+![generate-commit-message](https://raw.githubusercontent.com/sarim2000/envify-example/main/doc/screenshot.png)
 
 ## Installation
 

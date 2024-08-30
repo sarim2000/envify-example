@@ -1,6 +1,8 @@
 # envify-example CLI
 
-A command-line interface tool for managing environment variables, converting .env files, and interacting with Consul.
+A command-line interface tool for generating conentional github commit messages using OpenAI and managing environment variables, converting .env files, and interacting with Consul.
+
+![generate-commit-message](/doc/screenshot.png)
 
 ## Installation
 
@@ -10,11 +12,19 @@ npm install -g envify-example
 
 ## Usage
 
+
+
 ```bash
 envify-example [command] [options]
 ```
 
 ## Commands
+
+### Generate a commit message
+
+```bash
+envify-example commit
+```
 
 ### convert
 

@@ -27,6 +27,8 @@ Key points:
 - First line(type + scope + description) ≤ 72 characters
   - Use imperative: "add" not "added"
     - Wrap body and footer at 72 characters
+- Do not give any escape characters like \\n or \\" in the response.
+- Just return the commit message.
 
 Analyze code changes and create appropriate commit messages following these rules.
 `;

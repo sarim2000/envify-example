@@ -23,7 +23,7 @@ envify-example [command] [options]
 ### Generate a commit message
 
 ```bash
-envify-example commit
+envify-example generate-commit-message
 ```
 
 ### convert

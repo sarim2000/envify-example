@@ -22,7 +22,7 @@ export function saveConfigFile(config: Partial<Config>) {
   }
 }
 
-export function generateEnvExample(envPath: string, envType: 'example' | 'json') {
+export function generateEnvExample(envPath: string, envType: 'example' | 'json', secret: boolean = false) {
   const envDir = path.dirname(envPath);
   const envFileName = ".env";
   const envExamplePath = path.join(envDir, `${envFileName}.${envType === "json" ? "json" : "example"}`);
@@ -35,15 +35,14 @@ export function generateEnvExample(envPath: string, envType: 'example' | 'json')
   const envContent = fs.readFileSync(envPath, 'utf8');
 
   const envExampleContent = envType === "json"
-    ? convertEnvToJson(envContent)
+    ? convertEnvToJson(envContent, secret)
     : envContent
       .split('\n')
       .map(line => {
         const [key, ...valueParts] = line.split('=');
         const trimmedKey = key.trim();
         if (trimmedKey && !trimmedKey.startsWith('#')) {
-          const value = valueParts.join('=').trim();
-          return `${trimmedKey}=${value.length > 4 ? `${value.slice(0, 4)}****` : '*****'}`;
+          return `${trimmedKey}=${secret ? '*****' : valueParts.join('=').trim()}`;
         }
         return line;
       })
@@ -53,7 +52,7 @@ export function generateEnvExample(envPath: string, envType: 'example' | 'json')
   console.log(`${envExamplePath} file generated successfully`);
 }
 
-export async function uploadToConsul(config: Config, envContent: string, envName: string) {
+export async function uploadToConsul(config: Config, envContent: string, envName: string, secret: boolean = false) {
   const { consulUrl, consulToken, consulFolder } = config;
   try {
     const response = await fetch(
@@ -63,7 +62,7 @@ export async function uploadToConsul(config: Config, envContent: string, envName
         headers: {
           'Content-Type': 'application/json',
         },
-        body: envContent,
+        body: secret ? JSON.stringify(JSON.parse(envContent)) : envContent,
       }
     );
     if (response.status === 200) {
@@ -76,7 +75,7 @@ export async function uploadToConsul(config: Config, envContent: string, envName
   }
 }
 
-export async function downloadFromConsul(config: Config, envName: string) {
+export async function downloadFromConsul(config: Config, envName: string, secret: boolean = false) {
   const { consulUrl, consulFolder } = config;
   try {
     const response = await fetch(
@@ -84,7 +83,7 @@ export async function downloadFromConsul(config: Config, envName: string) {
     );
     const data = await response.json();
     const decodedValue = Buffer.from(data[0].Value, 'base64').toString('utf-8');
-    fs.writeFileSync(path.join(process.cwd(), '.env'), convertJsonToEnv(JSON.parse(decodedValue)));
+    fs.writeFileSync(path.join(process.cwd(), '.env'), convertJsonToEnv(JSON.parse(decodedValue), secret));
     console.log('Successfully downloaded from Consul');
   } catch (error) {
     console.error('Error downloading from Consul:', error);
@@ -97,6 +96,7 @@ export async function handleConsulConfig(configure: boolean, saveConfig: boolean
     consulToken: loadConfig().consulToken,
     consulFolder: loadConfig().consulFolder,
     envType: 'default',
+    openaiApiKey: loadConfig().openaiApiKey,
   };
 
   if (configure) {
@@ -110,28 +110,34 @@ export async function handleConsulConfig(configure: boolean, saveConfig: boolean
       default: config.consulFolder,
     });
 
-    config = { ...config, consulUrl, consulFolder };
+    const openaiApiKey = await input({
+      message: 'Enter OpenAI API key:',
+      default: config.openaiApiKey,
+    });
+
+    config = { ...config, consulUrl, consulFolder, openaiApiKey };
 
     if (saveConfig) {
       saveConfigFile({
         consulUrl: config.consulUrl,
         consulFolder: config.consulFolder,
+        openaiApiKey: config.openaiApiKey,
       });
-      console.log('Consul configuration saved for future use.');
+      console.log('Configuration saved for future use.');
     }
   }
 
   return config;
 } 
 
-export function convertEnvToJson(envContent: string): string {
+export function convertEnvToJson(envContent: string, secret: boolean = false): string {
   return JSON.stringify(
     envContent.split('\n').reduce((acc: Record<string, string>, line) => {
       const [key, ...valueParts] = line.split('=');
       const trimmedKey = key.trim();
       if (trimmedKey && !trimmedKey.startsWith('#')) {
         const value = valueParts.join('=').trim();
-        acc[trimmedKey] = value.length > 4 ? `${value.slice(0, 4)}****` : '******';
+        acc[trimmedKey] = secret ? value.length > 4 ? `${value.slice(0, 4)}****` : '******' : value;
       }
       return acc;
     }, {}),
@@ -140,6 +146,6 @@ export function convertEnvToJson(envContent: string): string {
   )
 }
 
-export function convertJsonToEnv(jsonContent: string): string {
-  return Object.entries(jsonContent).map(([key, value]) => `${key}=${value}`).join('\n');
+export function convertJsonToEnv(jsonContent: string, secret: boolean = false): string {
+  return Object.entries(jsonContent).map(([key, value]) => `${key}=${secret ? '*****' : value}`).join('\n');
 }

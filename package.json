@@ -1,6 +1,6 @@
 {
   "name": "envify-example",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Generate .env.example file from .env",
   "type": "module",
   "main": "dist/index.js",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "tsc && npm link"
   },
   "keywords": [
     "env",
@@ -21,10 +22,14 @@
   "dependencies": {
     "@inquirer/prompts": "^5.3.8",
     "@types/node": "^14.14.31",
+    "chalk": "^5.3.0",
     "commander": "^12.1.0",
-    "inquirer": "^10.1.8"
+    "figlet": "^1.7.0",
+    "inquirer": "^10.1.8",
+    "openai": "^4.57.0"
   },
   "devDependencies": {
+    "@types/figlet": "^1.5.8",
     "typescript": "^4.2.3"
   }
 }

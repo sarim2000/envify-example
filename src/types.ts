@@ -1,7 +1,7 @@
 type EnvType = "json" | "default";
 
 
-class Config {
+export class Config {
   consulUrl?: string;
   consulToken?: string;
   consulPath?: string;
@@ -16,4 +16,34 @@ class Config {
     this.envType = options.envType || "default";
     this.openaiApiKey = options.openaiApiKey;
   }
+}
+
+export interface OpenAPIPath {
+  [path: string]: {
+    [method: string]: {
+      summary?: string;
+      operationId?: string;
+      parameters?: any[];
+      requestBody?: any;
+      responses: {
+        [statusCode: string]: {
+          description: string;
+          content?: {
+            [contentType: string]: {
+              schema: any;
+            };
+          };
+        };
+      };
+    };
+  };
+}
+
+export interface OpenAPISpec {
+  paths: OpenAPIPath;
+  components: {
+    schemas: {
+      [schemaName: string]: any;
+    };
+  };
 }

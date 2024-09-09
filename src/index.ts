@@ -8,8 +8,7 @@ import { generateEnvExample, handleConsulConfig, uploadToConsul, convertEnvToJso
 import chalk from 'chalk';
 import { generateCommitMessage } from './commit.js';
 import { exec } from 'node:child_process';
-
-
+import { generatePytestFiles } from './fastapi-to-pytest.js';
 
 const program = new Command();
 
@@ -168,6 +167,21 @@ program.command('generate-commit-message')
     } else {
       console.log(chalk.blue('Commit cancelled. You can manually commit using:'));
       console.log(chalk.yellow(`git commit -m ${JSON.stringify(commitMessage)}`));
+    }
+  });
+
+program.command('generate-tests')
+  .description('Generate pytest files from a FastAPI project using OpenAPI docs')
+  .option('-u, --url <url>', 'URL of the running FastAPI application', 'http://localhost:8000')
+  .option('-o, --output <path>', 'Output directory for pytest files', path.join(process.cwd(), 'tests'))
+  .action(async (options) => {
+    try {
+      console.log(chalk.blue('Fetching OpenAPI documentation...'));
+      await generatePytestFiles(options.url, options.output);
+      console.log(chalk.green('Successfully generated pytest files.'));
+    } catch (error) {
+      console.error(chalk.red(`Error generating tests: ${error instanceof Error ? error.message : String(error)}`));
+      process.exit(1);
     }
   });
 

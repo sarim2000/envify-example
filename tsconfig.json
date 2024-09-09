@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "ESNext",
+    "target": "ESNext",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
   },
+  "exclude": [
+    "node_modules/@boundaryml/baml/index.d.ts",
+    "node_modules/@boundaryml/baml/native.d.ts"
+  ],
   "include": ["src/**/*"]
 }

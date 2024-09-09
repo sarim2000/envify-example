@@ -2,6 +2,7 @@ import { input } from "@inquirer/prompts";
 import path from "path";
 import os from "os";
 import fs from "fs";
+import { Config } from "./types.js";
 
 const CONFIG_FILE = path.join(os.homedir(), '.env-generator-config.json');
 

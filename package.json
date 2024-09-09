@@ -1,6 +1,6 @@
 {
   "name": "envify-example",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Generate .env.example file from .env",
   "type": "module",
   "main": "dist/index.js",

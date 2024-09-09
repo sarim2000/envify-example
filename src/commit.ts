@@ -29,7 +29,7 @@ Key points:
     - Wrap body and footer at 72 characters
 - Do not give any escape characters like \\n or \\" in the response.
 - Just return the commit message.
-- Keep it short and concise.
+- Keep it short and concise. Do not be over descriptive.
 
 Analyze code changes and create appropriate commit messages following these rules.
 `;

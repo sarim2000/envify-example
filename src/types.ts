@@ -18,32 +18,32 @@ export class Config {
   }
 }
 
-export interface OpenAPIPath {
-  [path: string]: {
-    [method: string]: {
-      summary?: string;
-      operationId?: string;
-      parameters?: any[];
-      requestBody?: any;
-      responses: {
-        [statusCode: string]: {
-          description: string;
-          content?: {
-            [contentType: string]: {
-              schema: any;
-            };
-          };
-        };
-      };
-    };
+
+export interface OpenAPISchema {
+  paths: Record<string, Record<string, any>>;
+  components?: {
+    schemas: Record<string, any>;
   };
 }
 
-export interface OpenAPISpec {
-  paths: OpenAPIPath;
-  components: {
-    schemas: {
-      [schemaName: string]: any;
-    };
-  };
+export interface Request {
+  method: string;
+  body: Record<string, any>;
+  headers: Record<string, string>;
+  parameters: Record<string, any>;
 }
+
+export interface Response {
+  status: number;
+  body: Record<string, any>;
+  headers: Record<string, string>;
+}
+
+export interface Endpoint {
+  endpoint: string;
+  request: Request;
+  response: Response;
+}
+
+
+

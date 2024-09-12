@@ -23,7 +23,7 @@ envify-example [command] [options]
 ### Generate Pytest
 
 ```bash
-envify-example generate-tests
+envify-example generate-pytest
 ```
 
 ### Generate a commit message

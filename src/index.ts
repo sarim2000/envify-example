@@ -5,6 +5,7 @@ import path from 'path';
 import { input } from '@inquirer/prompts';
 import { Command } from 'commander';
 import { generateEnvExample, handleConsulConfig, uploadToConsul, convertEnvToJson, downloadFromConsul, loadConfig } from './utils.js';
+import { generateGithubSecrets, setGithubSecrets } from './github.js';
 import chalk from 'chalk';
 import { generateCommitMessage } from './commit.js';
 import { exec } from 'node:child_process';
@@ -167,6 +168,34 @@ program.command('generate-commit-message')
     } else {
       console.log(chalk.blue('Commit cancelled. You can manually commit using:'));
       console.log(chalk.yellow(`git commit -m ${JSON.stringify(commitMessage)}`));
+    }
+  });
+
+program.command('gh-secrets')
+  .description('Generate GitHub secrets from .env file')
+  .option('-e, --env <path>', 'Path to .env file', '.env')
+  .action(async (options) => {
+    try {
+      const secrets = await generateGithubSecrets(options.env);
+      console.log('Generated GitHub secrets from .env file:');
+      console.table(secrets.map(s => ({ name: s.name })));
+      
+      const proceed = await input({
+        message: 'Do you want to set these secrets in GitHub? (yes/no)',
+        default: 'no'
+      });
+
+      if (proceed.toLowerCase() === 'yes') {
+        await setGithubSecrets(secrets);
+        console.log('✨ All secrets have been set in GitHub');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+      console.error('Error:', error.message);
+      } else {
+        console.error('An unknown error occurred');
+      }
+      process.exit(1);
     }
   });
 
